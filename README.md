@@ -2,7 +2,7 @@ Requirements
 ============
 
 1. [symfony-cli](https://symfony.com/download)
-2. PHP >= 8.1
+2. PHP >= 8.2
 3. pdo_sqlite
 4. composer
 5. yarn
