@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
+use function array_column;
 
 /**
  * @phpstan-type MovieRaw array{
@@ -61,6 +63,23 @@ class MovieController extends AbstractController
     {
         return $this->render('movie/list.html.twig', [
             'movies' => self::MOVIES,
+        ]);
+    }
+
+    #[Route(
+        path: '/movies/{slug}',
+        requirements: [
+            'slug' => '\d{4}-'.Requirement::ASCII_SLUG,
+        ],
+        name: 'app_movies_details',
+        methods: ['GET'],
+    )]
+    public function details(string $slug): Response
+    {
+        $movies = array_column(self::MOVIES, null, 'slug');
+
+        return $this->render('movie/details.html.twig', [
+            'movie' => $movies[$slug],
         ]);
     }
 }
