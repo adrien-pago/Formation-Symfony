@@ -15,5 +15,18 @@ Install
 
 ```bash
 $ symfony composer install
+$ yarn install
+$ yarn dev
 $ symfony serve -d
 ```
+
+Troubleshooting
+===============
+
+Yarn
+----
+
+You can replace `yarn` commands with `npm` ones.
+Instead of `yarn install` you can `npm install`.
+Instead of `yarn dev` you can `npm run dev`.
+Instead of `yarn watch` you can `npm run watch`.
