@@ -26,7 +26,7 @@ class MovieController extends AbstractController
     #[Route(
         path: '/movies/{slug}',
         requirements: [
-            'slug' => '\d{4}-'.Requirement::ASCII_SLUG,
+            'slug' => Movie::SLUG_FORMAT,
         ],
         name: 'app_movies_details',
         methods: ['GET'],
@@ -47,7 +47,7 @@ class MovieController extends AbstractController
         '/movies/{slug}/edit',
         name: 'app_movies_edit',
         requirements: [
-            'slug' => '\d{4}-'.Requirement::ASCII_SLUG
+            'slug' => Movie::SLUG_FORMAT,
         ],
         methods: ['GET', 'POST']
     )]

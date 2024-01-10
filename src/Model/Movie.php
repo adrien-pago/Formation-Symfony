@@ -5,10 +5,13 @@ namespace App\Model;
 use App\Entity\Movie as MovieEntity;
 use App\Entity\Genre as GenreEntity;
 use DateTimeImmutable;
+use Symfony\Component\Routing\Requirement\Requirement;
 use function array_map;
 
 final class Movie
 {
+    public const SLUG_FORMAT = '\d{4}-'.Requirement::ASCII_SLUG;
+
     /**
      * @param list<string> $genres
      */
