@@ -17,6 +17,8 @@ Install
 $ symfony composer install
 $ yarn install
 $ yarn dev
+$ symfony console doctrine:migration:migrate -n
+$ symfony console doctrine:fixtures:load -n
 $ symfony serve -d
 ```
 
