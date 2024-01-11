@@ -10,17 +10,18 @@ use Throwable;
 final class ApiConsumer implements ApiConsumerInterface
 {
     public function __construct(
-        private readonly HttpClientInterface $httpClient,
-        private readonly string $apiKey,
+        private readonly HttpClientInterface $omdbApiClient,
     ) {
     }
 
     public function getByImdbId(string $imdbId): Movie
     {
-        $response = $this->httpClient->request(
-            'GET',
-            "http://www.omdbapi.com/?apikey={$this->apiKey}&i={$imdbId}&plot=full"
-        );
+        $response = $this->omdbApiClient->request('GET', '/', [
+            'query' => [
+                'i' => $imdbId,
+                'plot' => 'full',
+            ]
+        ]);
 
         try {
             /** @var array{Title: string, Year: string, Rated: string, Released: string, Genre: string, Plot: string, Poster: string, imdbID: string, Type: string, Response: string} $movieRaw */
