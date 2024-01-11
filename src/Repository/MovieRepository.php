@@ -36,6 +36,21 @@ class MovieRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @return list<array{title: string, slug: string}>
+     */
+    public function listForNavbar(): array
+    {
+        $qb = $this->createQueryBuilder('movie');
+
+        $qb
+            ->select('movie.title')
+            ->addSelect('movie.slug')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function getBySlug(string $slug): Movie
     {
         return $this->findOneBy(['slug' => $slug]);
