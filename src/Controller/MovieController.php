@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Movie as MovieEntity;
 use App\Form\MovieType;
 use App\Model\Movie;
+use App\Omdb\Client\ApiConsumerInterface;
 use App\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,9 +48,11 @@ class MovieController extends AbstractController
         name: 'app_movies_details_omdb',
         methods: ['GET'],
     )]
-    public function detailsFromOmdb(HttpClientInterface $httpClient, string $imdbId): Response
+    public function detailsFromOmdb(ApiConsumerInterface $apiConsumer, string $imdbId): Response
     {
-        dd($httpClient->request('GET', "http://omdbapi.com?i={$imdbId}&apikey=c3466687")->toArray());
+        return $this->render('movie/details.html.twig', [
+            'movie' => Movie::fromOmdb($apiConsumer->getByImdbId($imdbId)),
+        ]);
     }
 
     #[Route(

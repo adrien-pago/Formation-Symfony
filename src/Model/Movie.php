@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Entity\Movie as MovieEntity;
 use App\Entity\Genre as GenreEntity;
+use App\Omdb\Client\Movie as MovieOmdb;
 use DateTimeImmutable;
 use Symfony\Component\Routing\Requirement\Requirement;
 use function array_map;
@@ -25,6 +26,17 @@ final class Movie
     ) {
     }
 
+    public static function fromOmdb(MovieOmdb $movieOmdb): self
+    {
+        return new self(
+            slug: '',
+            title: $movieOmdb->Title,
+            plot: $movieOmdb->Plot,
+            poster: $movieOmdb->Poster,
+            releasedAt: new DateTimeImmutable($movieOmdb->Released),
+            genres: explode(', ', $movieOmdb->Genre),
+        );
+    }
 
     public static function fromEntity(MovieEntity $movieEntity): self
     {
