@@ -16,9 +16,35 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class GenreRepository extends ServiceEntityRepository
 {
+    /**
+     * @var array<string, Genre>
+     */
+    private array $cache = [];
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Genre::class);
+    }
+
+    public function get(string $name): Genre
+    {
+        if (array_key_exists($name, $this->cache)) {
+            return $this->cache[$name];
+        }
+
+        $genre = $this->findOneBy([
+            'name' => $name,
+        ]);
+
+        if (null === $genre) {
+            $genre = (new Genre())->setName($name);
+
+            $this->getEntityManager()->persist($genre);
+        }
+
+        $this->cache[$name] = $genre;
+
+        return $genre;
     }
 
 //    /**
