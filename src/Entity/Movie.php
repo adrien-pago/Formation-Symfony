@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Model\Movie as MovieModel;
+use App\Model\Rating;
 use App\Repository\MovieRepository;
 use App\Validator\Constraints\PosterValid;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -50,8 +51,8 @@ class Movie
     #[Assert\Count(min: 1)]
     private Collection $genres;
 
-    #[ORM\Column(length: 6, nullable: true)]
-    private ?string $rated = null;
+    #[ORM\Column(length: 6, enumType: Rating::class, options: ['default' => Rating::GeneralAudiences->value])]
+    private Rating $rated = Rating::GeneralAudiences;
 
     public function __construct()
     {
@@ -147,12 +148,12 @@ class Movie
         return $this;
     }
 
-    public function getRated(): ?string
+    public function getRated(): Rating
     {
         return $this->rated;
     }
 
-    public function setRated(?string $rated): static
+    public function setRated(Rating $rated): static
     {
         $this->rated = $rated;
 
