@@ -25,6 +25,11 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    App\Omdb\Client\CachedApiConsumer:
+        decorates: 'App\Omdb\Client\ApiConsumer'
+
+    App\Omdb\Client\ApiConsumerInterface: '@App\Omdb\Client\CachedApiConsumer'
+
 when@dev:
     services:
         _defaults:
