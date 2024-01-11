@@ -2,9 +2,9 @@
 
 namespace App\Model;
 
-use App\Entity\Movie as MovieEntity;
 use App\Entity\Genre as GenreEntity;
-use App\Omdb\Client\Movie as MovieOmdb;
+use App\Entity\Movie as MovieEntity;
+use App\Omdb\Client\Model\Movie as MovieOmdb;
 use DateTimeImmutable;
 use Symfony\Component\Routing\Requirement\Requirement;
 use function array_map;

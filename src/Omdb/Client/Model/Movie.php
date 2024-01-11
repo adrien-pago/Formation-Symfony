@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Omdb\Client;
-
+namespace App\Omdb\Client\Model;
 
 final class Movie
 {
