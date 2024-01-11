@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class MovieController extends AbstractController
 {
@@ -46,9 +47,9 @@ class MovieController extends AbstractController
         name: 'app_movies_details_omdb',
         methods: ['GET'],
     )]
-    public function detailsFromOmdb(string $imdbId): Response
+    public function detailsFromOmdb(HttpClientInterface $httpClient, string $imdbId): Response
     {
-        dd($imdbId);
+        dd($httpClient->request('GET', "http://omdbapi.com?i={$imdbId}&apikey=c3466687")->toArray());
     }
 
     #[Route(
