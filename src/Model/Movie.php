@@ -66,4 +66,9 @@ final class Movie
     {
         return $this->releasedAt->format('Y');
     }
+
+    public function isRemotePoster(): bool
+    {
+        return str_starts_with($this->poster, 'http');
+    }
 }
