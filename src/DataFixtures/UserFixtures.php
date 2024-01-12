@@ -6,6 +6,7 @@ use App\Entity\User;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Psr\Clock\ClockInterface;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
 class UserFixtures extends Fixture
@@ -43,6 +44,7 @@ class UserFixtures extends Fixture
 
     public function __construct(
         private readonly PasswordHasherFactoryInterface $hasherFactory,
+        private readonly ClockInterface $clock,
     ) {
     }
 
@@ -55,7 +57,7 @@ class UserFixtures extends Fixture
             ;
 
             if (null !== $userDetails['age']) {
-                $birthYear = (new DateTimeImmutable())->modify("-{$userDetails['age']} years")->format('Y');
+                $birthYear = $this->clock->now()->modify("-{$userDetails['age']} years")->format('Y');
                 $birthdate = new DateTimeImmutable("{$userDetails['birthdate']} {$birthYear}");
                 $user->setBirthdate($birthdate);
             }
