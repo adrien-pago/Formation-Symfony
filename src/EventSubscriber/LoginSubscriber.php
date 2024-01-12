@@ -3,6 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Entity\User;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -34,7 +35,7 @@ class LoginSubscriber implements EventSubscriberInterface
     {
         return [
             LoginSuccessEvent::class => [
-                ['updateLastLoggedIn', 0]
+                ['updateLastLoggedIn', 0],
             ],
         ];
     }
