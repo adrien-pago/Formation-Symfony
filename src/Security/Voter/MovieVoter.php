@@ -26,6 +26,10 @@ class MovieVoter extends Voter
      */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
+        if ($subject->rated->minAgeRequired() === 0) {
+            return true;
+        }
+
         $user = $token->getUser();
 
         if (!$user instanceof User) {
