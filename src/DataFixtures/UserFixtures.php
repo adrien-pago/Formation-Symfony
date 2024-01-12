@@ -13,10 +13,12 @@ class UserFixtures extends Fixture
         [
             'username' => 'adrien',
             'password' => 'adrien',
+            'is_admin' => true,
         ],
         [
             'username' => 'max',
             'password' => 'max',
+            'is_admin' => false,
         ],
     ];
 
@@ -32,6 +34,11 @@ class UserFixtures extends Fixture
                 ->setUsername($userDetails['username'])
                 ->setPassword($this->hasherFactory->getPasswordHasher(User::class)->hash($userDetails['password']))
             ;
+
+            if (true === $userDetails['is_admin']) {
+                $user->setRoles(['ROLE_ADMIN']);
+            }
+
             $manager->persist($user);
         }
 
