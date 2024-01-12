@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale }}">
+<html lang="{{ app.locale }}">
 <head>
     <meta charset="UTF-8">
     <title>{% block title 'My movie gallery' %}</title>
@@ -9,12 +9,12 @@
     {% endblock stylesheets %}
 
     {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_script_tags('app') }}
     {% endblock javascripts %}
 </head>
 <body>
 {% block body %}
-    <main class="container">
+    <main class="container {% block mainClass '' %}">
         {% block navbar %}
             {{ render(controller('App\\Controller\\NavbarController::main')) }}
         {% endblock navbar %}
