@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
@@ -13,17 +14,35 @@ class UserFixtures extends Fixture
         [
             'username' => 'adrien',
             'password' => 'adrien',
+            'birthdate' => '10 July',
+            'age' => 35,
             'is_admin' => true,
         ],
         [
             'username' => 'max',
             'password' => 'max',
+            'birthdate' => '3 Feb',
+            'age' => 15,
+            'is_admin' => false,
+        ],
+        [
+            'username' => 'lou',
+            'password' => 'lou',
+            'birthdate' => '22 Dec',
+            'age' => 5,
+            'is_admin' => false,
+        ],
+        [
+            'username' => 'john',
+            'password' => 'john',
+            'birthdate' => null,
+            'age' => null,
             'is_admin' => false,
         ],
     ];
 
     public function __construct(
-        private readonly PasswordHasherFactoryInterface $hasherFactory
+        private readonly PasswordHasherFactoryInterface $hasherFactory,
     ) {
     }
 
@@ -34,6 +53,12 @@ class UserFixtures extends Fixture
                 ->setUsername($userDetails['username'])
                 ->setPassword($this->hasherFactory->getPasswordHasher(User::class)->hash($userDetails['password']))
             ;
+
+            if (null !== $userDetails['age']) {
+                $birthYear = (new DateTimeImmutable())->modify("-{$userDetails['age']} years")->format('Y');
+                $birthdate = new DateTimeImmutable("{$userDetails['birthdate']} {$birthYear}");
+                $user->setBirthdate($birthdate);
+            }
 
             if (true === $userDetails['is_admin']) {
                 $user->setRoles(['ROLE_ADMIN']);
